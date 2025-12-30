@@ -198,7 +198,18 @@
           currentClickEvent = null
           currentSourceElement = null
           
-          return tl
+          // Ensure timeline completes and return promise
+          return new Promise((resolve) => {
+            tl.eventCallback('onComplete', () => {
+              console.log('[Motion] Transition OUT complete, resolving...')
+              resolve()
+            })
+            // Fallback timeout
+            setTimeout(() => {
+              console.warn('[Motion] Transition OUT timeout, forcing resolve')
+              resolve()
+            }, (window.MOTION_CONFIG?.transition?.outDuration || 0.7) * 1000 + 500)
+          })
         },
         
         async enter(data) {
@@ -210,23 +221,28 @@
           if (!overlay || !circle) {
             console.warn('[Motion] Overlay not found, using fallback')
             // Fallback: no overlay, just fade in
-            gsap.fromTo(container, {
+            const fallbackTl = gsap.fromTo(container, {
               opacity: 0,
             }, {
               opacity: 1,
               duration: 0.3,
             })
-            return
+            return new Promise((resolve) => {
+              fallbackTl.eventCallback('onComplete', resolve)
+              setTimeout(resolve, 350)
+            })
           }
           
           const tl = createInTimeline(container, overlay, circle)
           
-          // Cleanup after animation
-          tl.call(() => {
-            console.log('[Motion] Transition complete')
-            Singularity.removeOverlay()
-            // Reinitialize scroll animations
-            if (window.ScrollTrigger) {
+          // Return promise that resolves when animation completes
+          return new Promise((resolve) => {
+            // Cleanup after animation
+            tl.call(() => {
+              console.log('[Motion] Transition complete')
+              Singularity.removeOverlay()
+              // Reinitialize scroll animations
+              if (window.ScrollTrigger) {
               ScrollTrigger.getAll().forEach(t => t.kill())
             }
             if (window.initScrollAnimations) {
