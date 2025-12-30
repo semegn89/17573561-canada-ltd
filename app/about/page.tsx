@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 export default function About() {
   return (
     <>
-      <section className="bg-gradient-to-r from-primary-600 to-primary-800 text-white">
+      <section className="bg-gradient-to-r from-primary-600 to-primary-800 text-white" data-singularity="hero">
         <div className="container-custom section-padding">
           <h1 className="text-4xl md:text-5xl font-bold mb-6">About Us</h1>
           <p className="text-xl text-primary-100">

@@ -120,7 +120,7 @@ export default function OceanFreight() {
           <p className="text-xl mb-8 text-primary-100">
             Get a quote for your ocean freight shipment
           </p>
-          <Link href="/request-a-quote" className="btn-primary bg-white text-primary-600 hover:bg-primary-50" data-hover="button">
+          <Link href="/request-a-quote" className="btn-primary bg-white text-primary-600 hover:bg-primary-50" data-hover="button" data-hover="button">
             Request a Quote
           </Link>
         </div>
