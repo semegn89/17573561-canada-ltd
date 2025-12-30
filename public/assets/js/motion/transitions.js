@@ -299,14 +299,14 @@
               resolve()
             }, (window.MOTION_CONFIG?.transition?.inDuration || 0.8) * 1000 + (window.MOTION_CONFIG?.transition?.overlayFadeOut || 0.3) * 1000 + 500)
             
-            // Clear timeout if resolved early
+            // Update onComplete to also clear timeout
+            const originalOnComplete = tl.eventCallback('onComplete')
             tl.eventCallback('onComplete', () => {
               clearTimeout(timeout)
               clearInterval(checkProgress)
+              if (originalOnComplete) originalOnComplete()
             })
           })
-          
-          return tl
         },
         
         async once(data) {
