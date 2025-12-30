@@ -73,8 +73,11 @@
    * Transition OUT timeline
    */
   function createOutTimeline(container, overlay, circle, point) {
+    const config = window.MOTION_CONFIG
+    if (!config) return gsap.timeline()
+    
     const tl = gsap.timeline()
-    const useBlur = config.performance.useBlur && Singularity.supportsBlur()
+    const useBlur = config.performance?.useBlur && Singularity.supportsBlur()
     
     // Phase 1: Scale down and fade (0-0.55s)
     tl.to(container, {
