@@ -17,7 +17,7 @@ export default function EuropeToCanada() {
             Complete logistics solutions connecting European suppliers with Canadian markets. 
             From pickup to delivery, we manage your entire shipment.
           </p>
-          <Link href="/request-a-quote" className="btn-primary bg-white text-primary-600 hover:bg-primary-50">
+          <Link href="/request-a-quote" className="btn-primary bg-white text-primary-600 hover:bg-primary-50" data-hover="button">
             Request a Quote
           </Link>
         </div>
