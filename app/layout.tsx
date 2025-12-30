@@ -130,21 +130,60 @@ export default function RootLayout({
                       let attempts = 0;
                       function checkConfig() {
                         attempts++;
-                        if (window.MOTION_CONFIG && window.MOTION_CONFIG.performance) {
-                          console.log('[Motion] ✅ Config initialized after', attempts, 'attempts');
+                        const config = window.MOTION_CONFIG;
+                        // Check for FULL config structure, not just performance
+                        if (config && 
+                            config.performance && 
+                            config.transition && 
+                            config.ease &&
+                            config.out &&
+                            config.in) {
+                          console.log('[Motion] ✅ Config fully initialized after', attempts, 'attempts');
+                          console.log('[Motion] Config structure verified:', {
+                            performance: !!config.performance,
+                            transition: !!config.transition,
+                            ease: !!config.ease,
+                            out: !!config.out,
+                            in: !!config.in,
+                          });
                           index++;
                           loadNext();
-                        } else if (attempts < 20) {
-                          console.log('[Motion] ⏳ Waiting for config... attempt', attempts);
+                        } else if (attempts < 50) {
+                          if (attempts % 5 === 0 || attempts <= 3) {
+                            console.log('[Motion] ⏳ Waiting for config... attempt', attempts);
+                            if (config) {
+                              console.log('[Motion] Current config keys:', Object.keys(config));
+                              console.log('[Motion] Has performance:', !!config.performance);
+                              console.log('[Motion] Has transition:', !!config.transition);
+                            } else {
+                              console.log('[Motion] Config is undefined');
+                            }
+                          }
                           setTimeout(checkConfig, 100);
                         } else {
-                          console.error('[Motion] ❌ Config failed to initialize after 20 attempts');
-                          // Continue anyway with fallback
+                          console.error('[Motion] ❌ Config failed to initialize after 50 attempts');
+                          console.error('[Motion] Final config:', config);
+                          // Create fallback config if missing critical parts
+                          if (!config || !config.performance || !config.transition) {
+                            console.warn('[Motion] Creating fallback config');
+                            window.MOTION_CONFIG = window.MOTION_CONFIG || {};
+                            Object.assign(window.MOTION_CONFIG, {
+                              performance: config?.performance || { prefersReducedMotion: false, useBlur: false },
+                              transition: config?.transition || { outDuration: 0.55, inDuration: 0.65, collapseDuration: 0.15, overlayFadeOut: 0.25, maxDuration: 2.5 },
+                              ease: config?.ease || { out: 'expo.in', in: 'expo.out', hover: 'power2.out', reveal: 'power2.out' },
+                              out: config?.out || { scale: { from: 1, to: 0.85 }, y: { from: 0, to: -20 }, opacity: { from: 1, to: 0 }, blur: 12 },
+                              in: config?.in || { scale: { from: 1.12, to: 1 }, y: { from: 24, to: 0 }, opacity: { from: 0, to: 1 } },
+                              overlay: config?.overlay || { scale: { from: 0.05, to: 1.5, collapse: 0.005, expand: 1.3 }, opacity: { from: 0, to: 0.95 } },
+                              basePath: basePath,
+                            });
+                            console.log('[Motion] Fallback config created');
+                          }
                           index++;
                           loadNext();
                         }
                       }
-                      setTimeout(checkConfig, 150);
+                      // Start checking after delay to let script execute
+                      setTimeout(checkConfig, 200);
                     } else {
                       index++;
                       loadNext();
