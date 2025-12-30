@@ -57,6 +57,13 @@
    * Initialize motion system
    */
   function init() {
+    // Wait for config
+    const config = window.MOTION_CONFIG
+    if (!config || !config.performance) {
+      setTimeout(init, 100)
+      return
+    }
+    
     // Setup forms
     if (window.setupForms) {
       window.setupForms()

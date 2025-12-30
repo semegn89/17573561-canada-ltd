@@ -135,20 +135,24 @@
   window.initScrollAnimations = initScrollAnimations
   window.initAccordion = initAccordion
   
-  // Auto-initialize on load
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => {
-      const container = document.querySelector('[data-barba="container"]')
-      if (container) {
-        initScrollAnimations(container)
-        initAccordion()
-      }
-    })
-  } else {
+  // Auto-initialize on load - but wait for config
+  function tryInit() {
+    const config = window.MOTION_CONFIG
+    if (!config || !config.performance) {
+      setTimeout(tryInit, 100)
+      return
+    }
+    
     const container = document.querySelector('[data-barba="container"]')
     if (container) {
       initScrollAnimations(container)
       initAccordion()
     }
+  }
+  
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', tryInit)
+  } else {
+    tryInit()
   }
 })()
