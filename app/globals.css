@@ -28,5 +28,30 @@
   .container-custom {
     @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
   }
+  
+  /* FAQ Accordion */
+  [data-faq-item] [data-faq-trigger] {
+    @apply transition-colors;
+  }
+  
+  [data-faq-item]:hover [data-faq-trigger] {
+    @apply text-primary-600;
+  }
+  
+  [data-faq-item].open [data-faq-content] {
+    height: auto !important;
+    opacity: 1 !important;
+  }
+  
+  /* Reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
 }
 

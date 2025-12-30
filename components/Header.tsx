@@ -31,7 +31,7 @@ export default function Header() {
             <Link href="/contact" className="text-gray-700 hover:text-primary-600 transition-colors">
               Contact
             </Link>
-            <Link href="/request-a-quote" className="btn-primary">
+            <Link href="/request-a-quote" className="btn-primary" data-hover="button">
               Request a Quote
             </Link>
           </div>

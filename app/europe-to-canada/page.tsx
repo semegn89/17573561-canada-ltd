@@ -10,7 +10,7 @@ export default function EuropeToCanada() {
   return (
     <>
       {/* Hero */}
-      <section className="bg-gradient-to-r from-primary-600 to-primary-800 text-white">
+      <section className="bg-gradient-to-r from-primary-600 to-primary-800 text-white" data-singularity="hero">
         <div className="container-custom section-padding">
           <h1 className="text-4xl md:text-5xl font-bold mb-6">Europe to Canada: Door-to-Door Freight</h1>
           <p className="text-xl mb-8 text-primary-100">
@@ -24,7 +24,7 @@ export default function EuropeToCanada() {
       </section>
 
       {/* Lane Capabilities */}
-      <section className="section-padding bg-white">
+      <section className="section-padding bg-white" data-animate="reveal">
         <div className="container-custom">
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">Lane Capabilities</h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -65,7 +65,7 @@ export default function EuropeToCanada() {
       </section>
 
       {/* Transit Times */}
-      <section className="section-padding bg-gray-50">
+      <section className="section-padding bg-gray-50" data-animate="reveal">
         <div className="container-custom">
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">Typical Transit Times</h2>
           <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
@@ -98,7 +98,7 @@ export default function EuropeToCanada() {
       </section>
 
       {/* Required Documents */}
-      <section className="section-padding bg-white">
+      <section className="section-padding bg-white" data-animate="reveal">
         <div className="container-custom">
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">Required Documents</h2>
           <div className="max-w-3xl mx-auto">
@@ -134,7 +134,7 @@ export default function EuropeToCanada() {
       </section>
 
       {/* Customs & Compliance */}
-      <section className="section-padding bg-gray-50">
+      <section className="section-padding bg-gray-50" data-animate="reveal">
         <div className="container-custom">
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">Customs & Compliance</h2>
           <div className="max-w-3xl mx-auto">
@@ -167,13 +167,13 @@ export default function EuropeToCanada() {
       </section>
 
       {/* Quote Form CTA */}
-      <section className="section-padding bg-primary-600 text-white">
+      <section className="section-padding bg-primary-600 text-white" data-animate="reveal">
         <div className="container-custom text-center">
           <h2 className="text-3xl md:text-4xl font-bold mb-6">Get Your Quote</h2>
           <p className="text-xl mb-8 text-primary-100">
             Ready to ship from Europe to Canada? Fill out our quote form and we&apos;ll get back to you within 24 hours.
           </p>
-          <Link href="/request-a-quote" className="btn-primary bg-white text-primary-600 hover:bg-primary-50">
+          <Link href="/request-a-quote" className="btn-primary bg-white text-primary-600 hover:bg-primary-50" data-hover="button">
             Request a Quote
           </Link>
         </div>
