@@ -6,10 +6,10 @@ const basePath = window.MOTION_BASE_PATH || '';
 window.MOTION_CONFIG = {
   // Timing
   transition: {
-    outDuration: 0.55,
-    collapseDuration: 0.15, // 0.55-0.70s total
-    inDuration: 0.65,
-    overlayFadeOut: 0.25,
+    outDuration: 0.7, // Increased for visibility
+    collapseDuration: 0.2, // 0.7-0.9s total
+    inDuration: 0.8, // Increased for visibility
+    overlayFadeOut: 0.3,
     maxDuration: 2.5, // timeout fallback
   },
   
@@ -21,23 +21,23 @@ window.MOTION_CONFIG = {
     reveal: 'power2.out',
   },
   
-  // Transform values
+  // Transform values - more dramatic for visibility
   out: {
-    scale: { from: 1, to: 0.85 },
-    y: { from: 0, to: -20 },
+    scale: { from: 1, to: 0.7 }, // More scale down
+    y: { from: 0, to: -30 }, // More movement
     opacity: { from: 1, to: 0 },
-    blur: 12, // only if performance allows
+    blur: 15, // More blur
   },
   
   in: {
-    scale: { from: 1.12, to: 1 },
-    y: { from: 24, to: 0 },
+    scale: { from: 1.2, to: 1 }, // More scale up
+    y: { from: 30, to: 0 }, // More movement
     opacity: { from: 0, to: 1 },
   },
   
   overlay: {
-    scale: { from: 0.05, to: 1.5, collapse: 0.005, expand: 1.3 },
-    opacity: { from: 0, to: 0.95 },
+    scale: { from: 0.02, to: 2.0, collapse: 0.001, expand: 1.5 }, // More dramatic overlay
+    opacity: { from: 0, to: 1 }, // Fully opaque
   },
   
   // Hover animations
