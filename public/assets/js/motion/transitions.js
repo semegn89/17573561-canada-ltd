@@ -192,23 +192,41 @@
           console.log('[Motion] Singularity point:', point)
           const { overlay, circle } = Singularity.createOverlay(point)
           
-          const tl = createOutTimeline(container, overlay, circle, point)
-          
           // Cleanup click tracking
           currentClickEvent = null
           currentSourceElement = null
           
-          // Ensure timeline completes and return promise
+          // Create timeline and wrap in promise
           return new Promise((resolve) => {
+            const tl = createOutTimeline(container, overlay, circle, point)
+            
+            // Use onComplete callback
             tl.eventCallback('onComplete', () => {
               console.log('[Motion] Transition OUT complete, resolving...')
               resolve()
             })
+            
+            // Also check timeline progress as fallback
+            const checkProgress = setInterval(() => {
+              if (tl.progress() >= 0.99 || tl.isActive() === false) {
+                clearInterval(checkProgress)
+                console.log('[Motion] Transition OUT complete (progress check), resolving...')
+                resolve()
+              }
+            }, 50)
+            
             // Fallback timeout
-            setTimeout(() => {
+            const timeout = setTimeout(() => {
+              clearInterval(checkProgress)
               console.warn('[Motion] Transition OUT timeout, forcing resolve')
               resolve()
-            }, (window.MOTION_CONFIG?.transition?.outDuration || 0.7) * 1000 + 500)
+            }, (window.MOTION_CONFIG?.transition?.outDuration || 0.7) * 1000 + (window.MOTION_CONFIG?.transition?.collapseDuration || 0.2) * 1000 + 500)
+            
+            // Clear timeout if resolved early
+            tl.eventCallback('onComplete', () => {
+              clearTimeout(timeout)
+              clearInterval(checkProgress)
+            })
           })
         },
         
