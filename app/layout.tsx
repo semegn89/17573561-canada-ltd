@@ -107,10 +107,12 @@ export default function RootLayout({
                   if (index >= scripts.length) {
                     // All scripts loaded, wait for config and initialize
                     function waitForConfig() {
-                      if (!window.MOTION_CONFIG) {
-                        setTimeout(waitForConfig, 50);
+                      if (!window.MOTION_CONFIG || !window.MOTION_CONFIG.performance) {
+                        console.log('[Motion] Waiting for config...', window.MOTION_CONFIG);
+                        setTimeout(waitForConfig, 100);
                         return;
                       }
+                      console.log('[Motion] ✅ Config ready:', window.MOTION_CONFIG);
                       setTimeout(function() {
                         if (window.initTransitions) {
                           console.log('[Motion] ✅ All libraries ready, initializing transitions...');
@@ -123,12 +125,19 @@ export default function RootLayout({
                   }
                   loadScript(scripts[index], function() {
                     console.log('[Motion] Loaded:', scripts[index]);
-                    // Special handling for config.js - wait a bit for it to execute
+                    // Special handling for config.js - wait longer for it to execute
                     if (index === 0) {
-                      setTimeout(function() {
-                        index++;
-                        loadNext();
-                      }, 50);
+                      // Wait for config to be fully initialized
+                      function checkConfig() {
+                        if (window.MOTION_CONFIG && window.MOTION_CONFIG.performance) {
+                          console.log('[Motion] ✅ Config initialized');
+                          index++;
+                          loadNext();
+                        } else {
+                          setTimeout(checkConfig, 50);
+                        }
+                      }
+                      setTimeout(checkConfig, 100);
                     } else {
                       index++;
                       loadNext();

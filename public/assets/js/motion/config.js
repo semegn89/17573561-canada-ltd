@@ -67,3 +67,6 @@ window.MOTION_CONFIG = window.MOTION_CONFIG || {
     prefersReducedMotion: window.matchMedia('(prefers-reduced-motion: reduce)').matches,
   },
 }
+
+// Log initialization
+console.log('[Motion] Config initialized:', window.MOTION_CONFIG);
