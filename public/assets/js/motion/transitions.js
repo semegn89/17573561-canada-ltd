@@ -146,9 +146,21 @@
   function initTransitions() {
     if (config.performance.prefersReducedMotion) {
       // Skip Barba for reduced motion - instant navigation
+      console.log('[Motion] Reduced motion detected, skipping transitions')
       return
     }
     
+    if (!window.barba) {
+      console.error('[Motion] Barba.js not loaded')
+      return
+    }
+    
+    if (!window.gsap) {
+      console.error('[Motion] GSAP not loaded')
+      return
+    }
+    
+    console.log('[Motion] Initializing transitions...')
     setupClickTracking()
     
     barba.init({
@@ -156,8 +168,10 @@
         name: 'singularity-transition',
         
         async leave(data) {
+          console.log('[Motion] Transition OUT started')
           const container = data.current.container
           const point = Singularity.getSingularityPoint(container, currentClickEvent, currentSourceElement)
+          console.log('[Motion] Singularity point:', point)
           const { overlay, circle } = Singularity.createOverlay(point)
           
           const tl = createOutTimeline(container, overlay, circle, point)
@@ -170,11 +184,13 @@
         },
         
         async enter(data) {
+          console.log('[Motion] Transition IN started')
           const container = data.next.container
           const overlay = document.getElementById('singularity-overlay')
           const circle = overlay?.querySelector('.singularity')
           
           if (!overlay || !circle) {
+            console.warn('[Motion] Overlay not found, using fallback')
             // Fallback: no overlay, just fade in
             gsap.fromTo(container, {
               opacity: 0,
@@ -189,6 +205,7 @@
           
           // Cleanup after animation
           tl.call(() => {
+            console.log('[Motion] Transition complete')
             Singularity.removeOverlay()
             // Reinitialize scroll animations
             if (window.ScrollTrigger) {
@@ -253,17 +270,34 @@
     })
   }
   
-  // Initialize when libraries are loaded
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => {
-      if (window.barba && window.gsap) {
-        initTransitions()
-      }
-    })
-  } else {
+  // Wait for libraries to load
+  function waitForLibraries() {
     if (window.barba && window.gsap) {
+      console.log('✅ All libraries ready, initializing transitions...')
       initTransitions()
+      return true
     }
+    return false
+  }
+  
+  // Try to initialize immediately
+  if (!waitForLibraries()) {
+    // Wait for DOM and libraries
+    const checkLibraries = setInterval(() => {
+      if (waitForLibraries()) {
+        clearInterval(checkLibraries)
+      }
+    }, 100)
+    
+    // Timeout after 5 seconds
+    setTimeout(() => {
+      clearInterval(checkLibraries)
+      if (!window.barba || !window.gsap) {
+        console.error('❌ Libraries failed to load after 5 seconds')
+        console.log('Barba:', typeof window.barba)
+        console.log('GSAP:', typeof window.gsap)
+      }
+    }, 5000)
   }
   
   // Export for manual initialization

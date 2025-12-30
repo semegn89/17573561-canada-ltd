@@ -60,44 +60,78 @@ export default function RootLayout({
           strategy="afterInteractive"
         />
         
-        {/* Motion system - inline config */}
-        <Script id="motion-config" strategy="afterInteractive">
+        {/* Motion system - inline config and initialization */}
+        <Script id="motion-init" strategy="afterInteractive">
           {`
-            window.MOTION_CONFIG = window.MOTION_CONFIG || {};
-            window.MOTION_CONFIG.basePath = '${basePath}';
-            window.MOTION_CONFIG.prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            (function() {
+              const basePath = '${basePath}';
+              
+              // Config
+              window.MOTION_CONFIG = window.MOTION_CONFIG || {};
+              window.MOTION_CONFIG.basePath = basePath;
+              window.MOTION_CONFIG.prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+              
+              // Load motion scripts sequentially
+              function loadScript(src, callback) {
+                const script = document.createElement('script');
+                script.src = src;
+                script.onload = callback;
+                script.onerror = function() {
+                  console.error('Failed to load:', src);
+                };
+                document.head.appendChild(script);
+              }
+              
+              // Wait for libraries, then load motion system
+              function initMotion() {
+                if (!window.barba || !window.gsap) {
+                  setTimeout(initMotion, 100);
+                  return;
+                }
+                
+                console.log('[Motion] Libraries loaded, initializing...');
+                
+                // Load motion scripts
+                const scripts = [
+                  basePath + '/assets/js/motion/config.js',
+                  basePath + '/assets/js/motion/singularity.js',
+                  basePath + '/assets/js/motion/menu.js',
+                  basePath + '/assets/js/motion/forms.js',
+                  basePath + '/assets/js/motion/scroll.js',
+                  basePath + '/assets/js/motion/transitions.js',
+                  basePath + '/assets/js/main.js'
+                ];
+                
+                let index = 0;
+                function loadNext() {
+                  if (index >= scripts.length) {
+                    // All scripts loaded, initialize
+                    setTimeout(function() {
+                      if (window.initTransitions) {
+                        console.log('[Motion] Initializing transitions...');
+                        window.initTransitions();
+                      }
+                    }, 200);
+                    return;
+                  }
+                  loadScript(scripts[index], function() {
+                    console.log('[Motion] Loaded:', scripts[index]);
+                    index++;
+                    loadNext();
+                  });
+                }
+                loadNext();
+              }
+              
+              // Start initialization
+              if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', initMotion);
+              } else {
+                initMotion();
+              }
+            })();
           `}
         </Script>
-        
-        {/* Load motion system scripts */}
-        <Script
-          src={`${basePath}/assets/js/motion/config.js`}
-          strategy="afterInteractive"
-        />
-        <Script
-          src={`${basePath}/assets/js/motion/singularity.js`}
-          strategy="afterInteractive"
-        />
-        <Script
-          src={`${basePath}/assets/js/motion/menu.js`}
-          strategy="afterInteractive"
-        />
-        <Script
-          src={`${basePath}/assets/js/motion/forms.js`}
-          strategy="afterInteractive"
-        />
-        <Script
-          src={`${basePath}/assets/js/motion/scroll.js`}
-          strategy="afterInteractive"
-        />
-        <Script
-          src={`${basePath}/assets/js/motion/transitions.js`}
-          strategy="afterInteractive"
-        />
-        <Script
-          src={`${basePath}/assets/js/main.js`}
-          strategy="afterInteractive"
-        />
       </body>
     </html>
   )

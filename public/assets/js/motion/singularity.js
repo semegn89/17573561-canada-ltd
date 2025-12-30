@@ -71,8 +71,8 @@ window.Singularity = window.Singularity || {
       top: ${point.y}px;
       background: radial-gradient(
         closest-side,
-        rgba(10, 20, 35, 0.22),
-        rgba(10, 20, 35, 0.86)
+        rgba(14, 30, 50, 0.35),
+        rgba(10, 20, 35, 0.95)
       );
       will-change: transform, opacity;
     `
