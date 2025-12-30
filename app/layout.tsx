@@ -66,10 +66,9 @@ export default function RootLayout({
             (function() {
               const basePath = '${basePath}';
               
-              // Config
-              window.MOTION_CONFIG = window.MOTION_CONFIG || {};
-              window.MOTION_CONFIG.basePath = basePath;
-              window.MOTION_CONFIG.prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+              // Don't create MOTION_CONFIG here - let config.js do it
+              // Just store basePath temporarily
+              window.MOTION_BASE_PATH = basePath;
               
               // Load motion scripts sequentially
               function loadScript(src, callback) {

@@ -1,5 +1,9 @@
 // Motion configuration
-window.MOTION_CONFIG = window.MOTION_CONFIG || {
+// Merge with existing config if any (from inline script)
+const basePath = window.MOTION_BASE_PATH || '';
+const existingPrefersReducedMotion = window.MOTION_CONFIG?.prefersReducedMotion;
+
+window.MOTION_CONFIG = {
   // Timing
   transition: {
     outDuration: 0.55,
@@ -64,8 +68,26 @@ window.MOTION_CONFIG = window.MOTION_CONFIG || {
   // Performance
   performance: {
     useBlur: true, // will check device capability
-    prefersReducedMotion: window.matchMedia('(prefers-reduced-motion: reduce)').matches,
+    prefersReducedMotion: existingPrefersReducedMotion !== undefined 
+      ? existingPrefersReducedMotion 
+      : window.matchMedia('(prefers-reduced-motion: reduce)').matches,
   },
+  
+  // Base path from inline script
+  basePath: basePath,
+}
+
+// Merge any existing properties
+if (window.MOTION_CONFIG && typeof window.MOTION_CONFIG === 'object') {
+  Object.assign(window.MOTION_CONFIG, {
+    basePath: basePath,
+    performance: {
+      ...window.MOTION_CONFIG.performance,
+      prefersReducedMotion: existingPrefersReducedMotion !== undefined 
+        ? existingPrefersReducedMotion 
+        : window.matchMedia('(prefers-reduced-motion: reduce)').matches,
+    }
+  });
 }
 
 // Log initialization
