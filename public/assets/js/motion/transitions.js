@@ -243,14 +243,23 @@
               Singularity.removeOverlay()
               // Reinitialize scroll animations
               if (window.ScrollTrigger) {
-              ScrollTrigger.getAll().forEach(t => t.kill())
-            }
-            if (window.initScrollAnimations) {
-              window.initScrollAnimations(container)
-            }
-            if (window.updateActiveMenu) {
-              window.updateActiveMenu(data.next.url.path)
-            }
+                ScrollTrigger.getAll().forEach(t => t.kill())
+              }
+              if (window.initScrollAnimations) {
+                window.initScrollAnimations(container)
+              }
+              if (window.updateActiveMenu) {
+                window.updateActiveMenu(data.next.url.path)
+              }
+              resolve()
+            })
+            
+            // Fallback timeout
+            setTimeout(() => {
+              console.warn('[Motion] Transition IN timeout, forcing resolve')
+              Singularity.removeOverlay()
+              resolve()
+            }, (window.MOTION_CONFIG?.transition?.inDuration || 0.8) * 1000 + 500)
           })
           
           return tl
