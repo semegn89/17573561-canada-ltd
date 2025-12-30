@@ -4,12 +4,15 @@
   'use strict'
   
   if (!window.barba || !window.gsap) {
-    console.warn('Barba.js or GSAP not loaded')
+    console.warn('[Motion] Barba.js or GSAP not loaded')
     return
   }
   
-  const config = window.MOTION_CONFIG
   const Singularity = window.Singularity
+  if (!Singularity) {
+    console.error('[Motion] Singularity not loaded')
+    return
+  }
   
   let currentClickEvent = null
   let currentSourceElement = null
@@ -37,6 +40,9 @@
    * Check if link should be intercepted by Barba
    */
   function shouldInterceptLink(link) {
+    const config = window.MOTION_CONFIG
+    if (!config || !config.performance) return false
+    
     // Don't intercept external links
     if (link.target === '_blank' || link.rel?.includes('external')) return false
     
@@ -72,30 +78,30 @@
     
     // Phase 1: Scale down and fade (0-0.55s)
     tl.to(container, {
-      scale: config.out.scale.to,
-      y: config.out.y.to,
-      opacity: config.out.opacity.to,
-      filter: useBlur ? `blur(${config.out.blur}px)` : 'none',
-      duration: config.transition.outDuration,
-      ease: config.ease.out,
+      scale: config.out?.scale?.to || 0.85,
+      y: config.out?.y?.to || -20,
+      opacity: config.out?.opacity?.to || 0,
+      filter: useBlur ? `blur(${config.out?.blur || 12}px)` : 'none',
+      duration: config.transition?.outDuration || 0.55,
+      ease: config.ease?.out || 'expo.in',
     }, 0)
     
     // Overlay expand
     tl.fromTo(circle, {
-      scale: config.overlay.scale.from,
-      opacity: config.overlay.opacity.from,
+      scale: config.overlay?.scale?.from || 0.05,
+      opacity: config.overlay?.opacity?.from || 0,
     }, {
-      scale: config.overlay.scale.to,
-      opacity: config.overlay.opacity.to,
-      duration: config.transition.outDuration,
-      ease: config.ease.out,
+      scale: config.overlay?.scale?.to || 1.5,
+      opacity: config.overlay?.opacity?.to || 0.95,
+      duration: config.transition?.outDuration || 0.55,
+      ease: config.ease?.out || 'expo.in',
     }, 0)
     
     // Phase 2: Collapse to singularity (0.55-0.70s)
     tl.to(circle, {
-      scale: config.overlay.scale.collapse,
-      duration: config.transition.collapseDuration,
-      ease: config.ease.out,
+      scale: config.overlay?.scale?.collapse || 0.005,
+      duration: config.transition?.collapseDuration || 0.15,
+      ease: config.ease?.out || 'expo.in',
     })
     
     return tl
@@ -105,36 +111,39 @@
    * Transition IN timeline
    */
   function createInTimeline(container, overlay, circle) {
+    const config = window.MOTION_CONFIG
+    if (!config) return gsap.timeline()
+    
     const tl = gsap.timeline()
     
     // Set initial state
     gsap.set(container, {
-      scale: config.in.scale.from,
-      y: config.in.y.from,
-      opacity: config.in.opacity.from,
+      scale: config.in?.scale?.from || 1.12,
+      y: config.in?.y?.from || 24,
+      opacity: config.in?.opacity?.from || 0,
     })
     
     // Expand overlay first
     gsap.set(circle, {
-      scale: config.overlay.scale.collapse,
+      scale: config.overlay?.scale?.collapse || 0.005,
       opacity: 1,
     })
     
     // Animate container in
     tl.to(container, {
-      scale: config.in.scale.to,
-      y: config.in.y.to,
-      opacity: config.in.opacity.to,
-      duration: config.transition.inDuration,
-      ease: config.ease.in,
+      scale: config.in?.scale?.to || 1,
+      y: config.in?.y?.to || 0,
+      opacity: config.in?.opacity?.to || 1,
+      duration: config.transition?.inDuration || 0.65,
+      ease: config.ease?.in || 'expo.out',
     }, 0)
     
     // Overlay fade out
     tl.to(circle, {
-      scale: config.overlay.scale.expand,
+      scale: config.overlay?.scale?.expand || 1.3,
       opacity: 0,
-      duration: config.transition.overlayFadeOut,
-      ease: config.ease.in,
+      duration: config.transition?.overlayFadeOut || 0.25,
+      ease: config.ease?.in || 'expo.out',
     }, 0.1)
     
     return tl
@@ -144,6 +153,12 @@
    * Initialize Barba
    */
   function initTransitions() {
+    const config = window.MOTION_CONFIG
+    if (!config || !config.performance) {
+      console.error('[Motion] Config not initialized')
+      return
+    }
+    
     if (config.performance.prefersReducedMotion) {
       // Skip Barba for reduced motion - instant navigation
       console.log('[Motion] Reduced motion detected, skipping transitions')

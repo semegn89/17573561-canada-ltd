@@ -3,14 +3,14 @@
 (function() {
   'use strict'
   
-  const config = window.MOTION_CONFIG || {}
   const gsap = window.gsap
   
   /**
    * Setup hover animations for buttons and cards
    */
   function setupHoverAnimations() {
-    if (config.performance?.prefersReducedMotion || !gsap) return
+    const config = window.MOTION_CONFIG
+    if (!config || !config.performance || config.performance.prefersReducedMotion || !gsap) return
     
     // Button hover
     const buttons = document.querySelectorAll('.btn-primary, .btn-secondary, [data-hover="button"]')

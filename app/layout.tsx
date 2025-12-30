@@ -91,7 +91,7 @@ export default function RootLayout({
                 
                 console.log('[Motion] Libraries loaded, initializing...');
                 
-                // Load motion scripts
+                // Load motion scripts - config MUST load first and complete
                 const scripts = [
                   basePath + '/assets/js/motion/config.js',
                   basePath + '/assets/js/motion/singularity.js',
@@ -105,19 +105,34 @@ export default function RootLayout({
                 let index = 0;
                 function loadNext() {
                   if (index >= scripts.length) {
-                    // All scripts loaded, initialize
-                    setTimeout(function() {
-                      if (window.initTransitions) {
-                        console.log('[Motion] Initializing transitions...');
-                        window.initTransitions();
+                    // All scripts loaded, wait for config and initialize
+                    function waitForConfig() {
+                      if (!window.MOTION_CONFIG) {
+                        setTimeout(waitForConfig, 50);
+                        return;
                       }
-                    }, 200);
+                      setTimeout(function() {
+                        if (window.initTransitions) {
+                          console.log('[Motion] ✅ All libraries ready, initializing transitions...');
+                          window.initTransitions();
+                        }
+                      }, 200);
+                    }
+                    waitForConfig();
                     return;
                   }
                   loadScript(scripts[index], function() {
                     console.log('[Motion] Loaded:', scripts[index]);
-                    index++;
-                    loadNext();
+                    // Special handling for config.js - wait a bit for it to execute
+                    if (index === 0) {
+                      setTimeout(function() {
+                        index++;
+                        loadNext();
+                      }, 50);
+                    } else {
+                      index++;
+                      loadNext();
+                    }
                   });
                 }
                 loadNext();

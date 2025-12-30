@@ -16,6 +16,9 @@
    * Initialize scroll animations for a container
    */
   function initScrollAnimations(container) {
+    const config = window.MOTION_CONFIG
+    if (!config || !config.performance) return
+    
     if (config.performance.prefersReducedMotion) {
       // Skip scroll animations for reduced motion
       return
@@ -81,6 +84,9 @@
    * Initialize FAQ accordion animations
    */
   function initAccordion() {
+    const config = window.MOTION_CONFIG
+    if (!config || !config.performance) return
+    
     if (config.performance.prefersReducedMotion) {
       // Use CSS for reduced motion
       return
