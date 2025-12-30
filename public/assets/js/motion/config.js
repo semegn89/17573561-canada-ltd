@@ -1,8 +1,8 @@
 // Motion configuration
-// Merge with existing config if any (from inline script)
+// Get basePath from inline script if available
 const basePath = window.MOTION_BASE_PATH || '';
-const existingPrefersReducedMotion = window.MOTION_CONFIG?.prefersReducedMotion;
 
+// Create full config object
 window.MOTION_CONFIG = {
   // Timing
   transition: {
@@ -68,29 +68,16 @@ window.MOTION_CONFIG = {
   // Performance
   performance: {
     useBlur: true, // will check device capability
-    prefersReducedMotion: existingPrefersReducedMotion !== undefined 
-      ? existingPrefersReducedMotion 
-      : window.matchMedia('(prefers-reduced-motion: reduce)').matches,
+    prefersReducedMotion: window.matchMedia('(prefers-reduced-motion: reduce)').matches,
   },
   
   // Base path from inline script
   basePath: basePath,
 }
 
-// Merge any existing properties
-if (window.MOTION_CONFIG && typeof window.MOTION_CONFIG === 'object') {
-  Object.assign(window.MOTION_CONFIG, {
-    basePath: basePath,
-    performance: {
-      ...window.MOTION_CONFIG.performance,
-      prefersReducedMotion: existingPrefersReducedMotion !== undefined 
-        ? existingPrefersReducedMotion 
-        : window.matchMedia('(prefers-reduced-motion: reduce)').matches,
-    }
-  });
-}
-
 // Log initialization
 console.log('[Motion] ✅ Config file executed');
 console.log('[Motion] ✅ MOTION_CONFIG object:', window.MOTION_CONFIG);
 console.log('[Motion] ✅ Performance config:', window.MOTION_CONFIG?.performance);
+console.log('[Motion] ✅ Has transition:', !!window.MOTION_CONFIG?.transition);
+console.log('[Motion] ✅ Has ease:', !!window.MOTION_CONFIG?.ease);
