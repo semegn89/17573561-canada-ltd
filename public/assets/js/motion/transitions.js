@@ -283,9 +283,12 @@
       }
     })
     
-    barba.hooks.enterError(() => {
-      Singularity.removeOverlay()
-    })
+    // Note: enterError hook may not be available in all Barba versions
+    if (barba.hooks && typeof barba.hooks.enterError === 'function') {
+      barba.hooks.enterError(() => {
+        Singularity.removeOverlay()
+      })
+    }
   }
   
   // Wait for libraries and config to load
