@@ -69,4 +69,6 @@ window.MOTION_CONFIG = window.MOTION_CONFIG || {
 }
 
 // Log initialization
-console.log('[Motion] Config initialized:', window.MOTION_CONFIG);
+console.log('[Motion] ✅ Config file executed');
+console.log('[Motion] ✅ MOTION_CONFIG object:', window.MOTION_CONFIG);
+console.log('[Motion] ✅ Performance config:', window.MOTION_CONFIG?.performance);

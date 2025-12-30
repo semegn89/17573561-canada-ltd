@@ -124,20 +124,28 @@ export default function RootLayout({
                     return;
                   }
                   loadScript(scripts[index], function() {
-                    console.log('[Motion] Loaded:', scripts[index]);
+                    console.log('[Motion] ✅ Script loaded:', scripts[index]);
                     // Special handling for config.js - wait longer for it to execute
                     if (index === 0) {
                       // Wait for config to be fully initialized
+                      let attempts = 0;
                       function checkConfig() {
+                        attempts++;
                         if (window.MOTION_CONFIG && window.MOTION_CONFIG.performance) {
-                          console.log('[Motion] ✅ Config initialized');
+                          console.log('[Motion] ✅ Config initialized after', attempts, 'attempts');
                           index++;
                           loadNext();
+                        } else if (attempts < 20) {
+                          console.log('[Motion] ⏳ Waiting for config... attempt', attempts);
+                          setTimeout(checkConfig, 100);
                         } else {
-                          setTimeout(checkConfig, 50);
+                          console.error('[Motion] ❌ Config failed to initialize after 20 attempts');
+                          // Continue anyway with fallback
+                          index++;
+                          loadNext();
                         }
                       }
-                      setTimeout(checkConfig, 100);
+                      setTimeout(checkConfig, 150);
                     } else {
                       index++;
                       loadNext();
