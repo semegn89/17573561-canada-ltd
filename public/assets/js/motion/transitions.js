@@ -353,10 +353,16 @@
     })
     
     // Note: enterError hook may not be available in all Barba versions
-    if (barba.hooks && typeof barba.hooks.enterError === 'function') {
-      barba.hooks.enterError(() => {
-        Singularity.removeOverlay()
-      })
+    // Use try-catch to safely check for enterError
+    try {
+      if (barba.hooks && barba.hooks.enterError && typeof barba.hooks.enterError === 'function') {
+        barba.hooks.enterError(() => {
+          Singularity.removeOverlay()
+        })
+      }
+    } catch (e) {
+      // enterError not available in this version of Barba
+      console.log('[Motion] enterError hook not available')
     }
   }
   
