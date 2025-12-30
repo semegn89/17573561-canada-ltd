@@ -9,7 +9,9 @@ export default function robots(): MetadataRoute.Robots {
         disallow: ['/api/'],
       },
     ],
-    sitemap: 'https://www.17573561canada.ca/sitemap.xml', // TODO: Update with actual domain
+    sitemap: process.env.NODE_ENV === 'production'
+      ? 'https://semegn89.github.io/17573561-canada-ltd/sitemap.xml'
+      : 'http://localhost:3000/sitemap.xml',
   }
 }
 

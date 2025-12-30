@@ -1,7 +1,9 @@
 import { MetadataRoute } from 'next'
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://www.17573561canada.ca' // TODO: Update with actual domain
+  const baseUrl = process.env.NODE_ENV === 'production' 
+    ? 'https://semegn89.github.io/17573561-canada-ltd'
+    : 'http://localhost:3000'
   
   return [
     {
