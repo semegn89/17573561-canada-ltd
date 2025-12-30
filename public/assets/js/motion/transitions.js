@@ -251,12 +251,12 @@
             })
           }
           
-          const tl = createInTimeline(container, overlay, circle)
-          
           // Return promise that resolves when animation completes
           return new Promise((resolve) => {
-            // Cleanup after animation
-            tl.call(() => {
+            const tl = createInTimeline(container, overlay, circle)
+            
+            // Use onComplete callback
+            tl.eventCallback('onComplete', () => {
               console.log('[Motion] Transition complete')
               Singularity.removeOverlay()
               // Reinitialize scroll animations
@@ -272,12 +272,38 @@
               resolve()
             })
             
+            // Also check timeline progress as fallback
+            const checkProgress = setInterval(() => {
+              if (tl.progress() >= 0.99 || tl.isActive() === false) {
+                clearInterval(checkProgress)
+                console.log('[Motion] Transition IN complete (progress check)')
+                Singularity.removeOverlay()
+                if (window.ScrollTrigger) {
+                  ScrollTrigger.getAll().forEach(t => t.kill())
+                }
+                if (window.initScrollAnimations) {
+                  window.initScrollAnimations(container)
+                }
+                if (window.updateActiveMenu) {
+                  window.updateActiveMenu(data.next.url.path)
+                }
+                resolve()
+              }
+            }, 50)
+            
             // Fallback timeout
-            setTimeout(() => {
+            const timeout = setTimeout(() => {
+              clearInterval(checkProgress)
               console.warn('[Motion] Transition IN timeout, forcing resolve')
               Singularity.removeOverlay()
               resolve()
-            }, (window.MOTION_CONFIG?.transition?.inDuration || 0.8) * 1000 + 500)
+            }, (window.MOTION_CONFIG?.transition?.inDuration || 0.8) * 1000 + (window.MOTION_CONFIG?.transition?.overlayFadeOut || 0.3) * 1000 + 500)
+            
+            // Clear timeout if resolved early
+            tl.eventCallback('onComplete', () => {
+              clearTimeout(timeout)
+              clearInterval(checkProgress)
+            })
           })
           
           return tl
