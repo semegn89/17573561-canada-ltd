@@ -86,7 +86,7 @@ export default function RequestAQuote() {
             </svg>
             <h1 className="text-3xl font-bold mb-4">Thank You!</h1>
             <p className="text-lg text-gray-700 mb-6">
-              Your quote request has been submitted successfully. We'll review your requirements and get back to you within 24 hours.
+              Your quote request has been submitted successfully. We&apos;ll review your requirements and get back to you within 24 hours.
             </p>
             <Link href="/" className="btn-primary">
               Return to Home
@@ -103,7 +103,7 @@ export default function RequestAQuote() {
         <div className="container-custom section-padding">
           <h1 className="text-4xl md:text-5xl font-bold mb-6">Request a Quote</h1>
           <p className="text-xl text-primary-100">
-            Fill out the form below and we'll provide you with a detailed quote for your shipment.
+            Fill out the form below and we&apos;ll provide you with a detailed quote for your shipment.
           </p>
         </div>
       </section>

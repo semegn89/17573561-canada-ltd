@@ -60,7 +60,7 @@ export default function Contact() {
         <div className="container-custom section-padding">
           <h1 className="text-4xl md:text-5xl font-bold mb-6">Contact Us</h1>
           <p className="text-xl text-primary-100">
-            Get in touch with our team. We're here to help with your freight and logistics needs.
+            Get in touch with our team. We&apos;re here to help with your freight and logistics needs.
           </p>
         </div>
       </section>
@@ -192,7 +192,7 @@ export default function Contact() {
 
                 {submitStatus === 'success' && (
                   <div className="p-4 bg-green-50 border border-green-200 rounded-lg">
-                    <p className="text-green-800">Thank you! Your message has been sent. We'll get back to you soon.</p>
+                    <p className="text-green-800">Thank you! Your message has been sent. We&apos;ll get back to you soon.</p>
                   </div>
                 )}
 
