@@ -288,10 +288,10 @@
     })
   }
   
-  // Wait for libraries to load
+  // Wait for libraries and config to load
   function waitForLibraries() {
-    if (window.barba && window.gsap) {
-      console.log('✅ All libraries ready, initializing transitions...')
+    if (window.barba && window.gsap && window.MOTION_CONFIG && window.MOTION_CONFIG.performance) {
+      console.log('[Motion] ✅ All dependencies ready, initializing transitions...')
       initTransitions()
       return true
     }
