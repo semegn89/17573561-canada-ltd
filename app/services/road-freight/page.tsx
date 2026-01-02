@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 export default function RoadFreight() {
   return (
     <>
-      <section className="bg-gradient-to-r from-primary-600 to-primary-800 text-white" data-singularity="hero">
+      <section className="bg-gradient-to-r from-primary-600 to-primary-800 text-white">
         <div className="container-custom section-padding">
           <h1 className="text-4xl md:text-5xl font-bold mb-6">Road Freight</h1>
           <p className="text-xl text-primary-100">
@@ -120,7 +120,7 @@ export default function RoadFreight() {
           <p className="text-xl mb-8 text-primary-100">
             Get a quote for your road freight and pickup services
           </p>
-          <Link href="/request-a-quote" className="btn-primary bg-white text-primary-600 hover:bg-primary-50" data-hover="button">
+          <Link href="/request-a-quote" className="btn-primary bg-white text-primary-600 hover:bg-primary-50">
             Request a Quote
           </Link>
         </div>
@@ -128,4 +128,5 @@ export default function RoadFreight() {
     </>
   )
 }
+
 

@@ -5,7 +5,7 @@ export default function Home() {
   return (
     <>
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-primary-600 to-primary-800 text-white" data-singularity="hero">
+      <section className="bg-gradient-to-r from-primary-600 to-primary-800 text-white">
         <div className="container-custom section-padding">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div>
@@ -17,10 +17,10 @@ export default function Home() {
                 Reliable ocean, air, and road freight solutions tailored to your business needs.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
-                <Link href="/request-a-quote" className="btn-primary bg-white text-primary-600 hover:bg-primary-50 text-center" data-hover="button">
+                <Link href="/request-a-quote" className="btn-primary bg-white text-primary-600 hover:bg-primary-50 text-center">
                   Request a Quote
                 </Link>
-                <Link href="/contact" className="btn-secondary bg-transparent border-white text-white hover:bg-white/10 text-center" data-hover="button">
+                <Link href="/contact" className="btn-secondary bg-transparent border-white text-white hover:bg-white/10 text-center">
                   Talk to an Expert
                 </Link>
               </div>
@@ -35,10 +35,10 @@ export default function Home() {
       </section>
 
       {/* How It Works */}
-      <section className="section-padding bg-white" data-animate="reveal">
+      <section className="section-padding bg-white">
         <div className="container-custom">
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">How It Works</h2>
-          <div className="grid md:grid-cols-3 lg:grid-cols-6 gap-6" data-animate="stagger">
+          <div className="grid md:grid-cols-3 lg:grid-cols-6 gap-6">
             {[
               { step: '1', title: 'Request', desc: 'Submit your quote request' },
               { step: '2', title: 'Booking', desc: 'We confirm and book' },
@@ -60,7 +60,7 @@ export default function Home() {
       </section>
 
       {/* Services Preview */}
-      <section className="section-padding bg-gray-50" data-animate="reveal">
+      <section className="section-padding bg-gray-50">
         <div className="container-custom">
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">Our Services</h2>
           <div className="grid md:grid-cols-3 gap-8">
@@ -88,8 +88,6 @@ export default function Home() {
                 key={service.title}
                 href={service.link}
                 className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow"
-                data-hover="card"
-                data-singularity-source
               >
                 <div className="h-48 bg-gray-200 flex items-center justify-center">
                   <span className="text-gray-400 text-sm">{service.image}</span>
@@ -106,10 +104,10 @@ export default function Home() {
       </section>
 
       {/* Why Choose Us */}
-      <section className="section-padding bg-white" data-animate="reveal">
+      <section className="section-padding bg-white">
         <div className="container-custom">
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">Why Choose Us</h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8" data-animate="stagger">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {[
               'Real-time shipment tracking and visibility',
               'Comprehensive documentation and compliance support',
@@ -130,7 +128,7 @@ export default function Home() {
       </section>
 
       {/* Trade Lane Highlight */}
-      <section className="section-padding bg-primary-50" data-animate="reveal">
+      <section className="section-padding bg-primary-50">
         <div className="container-custom">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div>
@@ -139,7 +137,7 @@ export default function Home() {
                 Our specialized route connecting European suppliers with Canadian markets. 
                 We handle the entire logistics chain from pickup to final delivery.
               </p>
-              <Link href="/europe-to-canada" className="btn-primary" data-hover="button">
+              <Link href="/europe-to-canada" className="btn-primary">
                 Explore Europe→Canada
               </Link>
             </div>
@@ -153,7 +151,7 @@ export default function Home() {
       </section>
 
       {/* FAQ */}
-      <section className="section-padding bg-white" data-animate="reveal">
+      <section className="section-padding bg-white">
         <div className="container-custom">
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">Frequently Asked Questions</h2>
           <div className="max-w-3xl mx-auto space-y-6">
@@ -195,13 +193,13 @@ export default function Home() {
       </section>
 
       {/* Final CTA */}
-      <section className="section-padding bg-primary-600 text-white" data-animate="reveal">
+      <section className="section-padding bg-primary-600 text-white">
         <div className="container-custom text-center">
           <h2 className="text-3xl md:text-4xl font-bold mb-6">Ready to Ship?</h2>
           <p className="text-xl mb-8 text-primary-100">
             Get a quote for your Europe to Canada shipment today
           </p>
-          <Link href="/request-a-quote" className="btn-primary bg-white text-primary-600 hover:bg-primary-50" data-hover="button">
+          <Link href="/request-a-quote" className="btn-primary bg-white text-primary-600 hover:bg-primary-50">
             Request a Quote
           </Link>
         </div>
