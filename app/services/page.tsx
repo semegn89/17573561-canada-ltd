@@ -1,10 +1,8 @@
-import Link from 'next/link'
-import type { Metadata } from 'next'
+'use client'
 
-export const metadata: Metadata = {
-  title: 'Freight Services | Ocean, Air, Road & Customs',
-  description: 'Comprehensive freight and logistics services: ocean freight, air freight, road freight, and customs support.',
-}
+import TransitionLink from '@/components/TransitionLink'
+import { motion } from 'framer-motion'
+import Reveal, { RevealStagger } from '@/components/motion/Reveal'
 
 const services = [
   {
@@ -49,37 +47,40 @@ export default function Services() {
   return (
     <div className="section-padding bg-white">
       <div className="container-custom">
-        <div className="text-center mb-16">
+        <Reveal className="text-center mb-16">
           <h1 className="text-4xl md:text-5xl font-bold mb-6">Our Services</h1>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
             Comprehensive freight and logistics solutions tailored to your business needs. 
             From ocean and air freight to customs support, we handle every step of your supply chain.
           </p>
-        </div>
+        </Reveal>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <RevealStagger className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {services.map((service) => (
-            <Link
+            <motion.div
               key={service.title}
-              href={service.link}
-              className="bg-white border-2 border-gray-200 rounded-lg p-8 hover:border-primary-600 hover:shadow-lg transition-all"
+              whileHover={{ y: -6 }}
+              transition={{ duration: 0.2 }}
+              className="bg-white border-2 border-gray-200 rounded-lg p-8 hover:border-primary-600 shadow-sm"
             >
-              <div className="text-4xl mb-4">{service.icon}</div>
-              <h2 className="text-2xl font-bold mb-4">{service.title}</h2>
-              <p className="text-gray-600 mb-6">{service.description}</p>
-              <span className="text-primary-600 font-semibold">Learn more →</span>
-            </Link>
+              <TransitionLink href={service.link} className="block">
+                <div className="text-4xl mb-4">{service.icon}</div>
+                <h2 className="text-2xl font-bold mb-4">{service.title}</h2>
+                <p className="text-gray-600 mb-6">{service.description}</p>
+                <span className="text-primary-600 font-semibold">Learn more →</span>
+              </TransitionLink>
+            </motion.div>
           ))}
-        </div>
+        </RevealStagger>
 
-        <div className="mt-16 text-center">
-          <Link href="/request-a-quote" className="btn-primary">
-            Request a Quote
-          </Link>
-        </div>
+        <Reveal className="mt-16 text-center">
+          <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.98 }}>
+            <TransitionLink href="/request-a-quote" className="btn-primary">
+              Request a Quote
+            </TransitionLink>
+          </motion.div>
+        </Reveal>
       </div>
     </div>
   )
 }
-
-

@@ -1,11 +1,13 @@
-import Link from 'next/link'
-import Image from 'next/image'
+'use client'
+
+import TransitionLink from '@/components/TransitionLink'
+import Reveal, { RevealStagger } from '@/components/motion/Reveal'
+import { motion } from 'framer-motion'
 
 export default function Home() {
   return (
     <>
-      {/* Hero Section */}
-      <section className="bg-gradient-to-r from-primary-600 to-primary-800 text-white">
+      <section className="bg-gradient-to-r from-primary-600 to-primary-800 text-white" data-singularity="hero">
         <div className="container-custom section-padding">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div>
@@ -17,12 +19,16 @@ export default function Home() {
                 Reliable ocean, air, and road freight solutions tailored to your business needs.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
-                <Link href="/request-a-quote" className="btn-primary bg-white text-primary-600 hover:bg-primary-50 text-center">
-                  Request a Quote
-                </Link>
-                <Link href="/contact" className="btn-secondary bg-transparent border-white text-white hover:bg-white/10 text-center">
-                  Talk to an Expert
-                </Link>
+                <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.98 }}>
+                  <TransitionLink href="/request-a-quote" className="btn-primary bg-white text-primary-600 hover:bg-primary-50 text-center">
+                    Request a Quote
+                  </TransitionLink>
+                </motion.div>
+                <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.98 }}>
+                  <TransitionLink href="/contact" className="btn-secondary bg-transparent border-white text-white hover:bg-white/10 text-center">
+                    Talk to an Expert
+                  </TransitionLink>
+                </motion.div>
               </div>
             </div>
             <div className="relative h-96 rounded-lg overflow-hidden">
@@ -34,11 +40,10 @@ export default function Home() {
         </div>
       </section>
 
-      {/* How It Works */}
-      <section className="section-padding bg-white">
+      <Reveal className="section-padding bg-white">
         <div className="container-custom">
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">How It Works</h2>
-          <div className="grid md:grid-cols-3 lg:grid-cols-6 gap-6">
+          <RevealStagger className="grid md:grid-cols-3 lg:grid-cols-6 gap-6">
             {[
               { step: '1', title: 'Request', desc: 'Submit your quote request' },
               { step: '2', title: 'Booking', desc: 'We confirm and book' },
@@ -55,12 +60,11 @@ export default function Home() {
                 <p className="text-sm text-gray-600">{item.desc}</p>
               </div>
             ))}
-          </div>
+          </RevealStagger>
         </div>
-      </section>
+      </Reveal>
 
-      {/* Services Preview */}
-      <section className="section-padding bg-gray-50">
+      <Reveal className="section-padding bg-gray-50">
         <div className="container-custom">
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">Our Services</h2>
           <div className="grid md:grid-cols-3 gap-8">
@@ -84,30 +88,34 @@ export default function Home() {
                 image: 'service_customs.webp',
               },
             ].map((service) => (
-              <Link
+              <motion.div
                 key={service.title}
-                href={service.link}
-                className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow"
+                whileHover={{ y: -6 }}
+                transition={{ duration: 0.2 }}
               >
-                <div className="h-48 bg-gray-200 flex items-center justify-center">
-                  <span className="text-gray-400 text-sm">{service.image}</span>
-                </div>
-                <div className="p-6">
-                  <h3 className="text-xl font-bold mb-2">{service.title}</h3>
-                  <p className="text-gray-600 mb-4">{service.desc}</p>
-                  <span className="text-primary-600 font-semibold">Learn more →</span>
-                </div>
-              </Link>
+                <TransitionLink
+                  href={service.link}
+                  className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow block"
+                >
+                  <div className="h-48 bg-gray-200 flex items-center justify-center">
+                    <span className="text-gray-400 text-sm">{service.image}</span>
+                  </div>
+                  <div className="p-6">
+                    <h3 className="text-xl font-bold mb-2">{service.title}</h3>
+                    <p className="text-gray-600 mb-4">{service.desc}</p>
+                    <span className="text-primary-600 font-semibold">Learn more →</span>
+                  </div>
+                </TransitionLink>
+              </motion.div>
             ))}
           </div>
         </div>
-      </section>
+      </Reveal>
 
-      {/* Why Choose Us */}
-      <section className="section-padding bg-white">
+      <Reveal className="section-padding bg-white">
         <div className="container-custom">
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">Why Choose Us</h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <RevealStagger className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {[
               'Real-time shipment tracking and visibility',
               'Comprehensive documentation and compliance support',
@@ -123,12 +131,11 @@ export default function Home() {
                 <p className="text-gray-700">{feature}</p>
               </div>
             ))}
-          </div>
+          </RevealStagger>
         </div>
-      </section>
+      </Reveal>
 
-      {/* Trade Lane Highlight */}
-      <section className="section-padding bg-primary-50">
+      <Reveal className="section-padding bg-primary-50">
         <div className="container-custom">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div>
@@ -137,9 +144,11 @@ export default function Home() {
                 Our specialized route connecting European suppliers with Canadian markets. 
                 We handle the entire logistics chain from pickup to final delivery.
               </p>
-              <Link href="/europe-to-canada" className="btn-primary">
-                Explore Europe→Canada
-              </Link>
+              <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.98 }}>
+                <TransitionLink href="/europe-to-canada" className="btn-primary">
+                  Explore Europe→Canada
+                </TransitionLink>
+              </motion.div>
             </div>
             <div className="relative h-96 rounded-lg overflow-hidden">
               <div className="absolute inset-0 bg-gray-800 flex items-center justify-center">
@@ -148,10 +157,9 @@ export default function Home() {
             </div>
           </div>
         </div>
-      </section>
+      </Reveal>
 
-      {/* FAQ */}
-      <section className="section-padding bg-white">
+      <Reveal className="section-padding bg-white">
         <div className="container-custom">
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">Frequently Asked Questions</h2>
           <div className="max-w-3xl mx-auto space-y-6">
@@ -190,21 +198,21 @@ export default function Home() {
             ))}
           </div>
         </div>
-      </section>
+      </Reveal>
 
-      {/* Final CTA */}
-      <section className="section-padding bg-primary-600 text-white">
+      <Reveal className="section-padding bg-primary-600 text-white">
         <div className="container-custom text-center">
           <h2 className="text-3xl md:text-4xl font-bold mb-6">Ready to Ship?</h2>
           <p className="text-xl mb-8 text-primary-100">
             Get a quote for your Europe to Canada shipment today
           </p>
-          <Link href="/request-a-quote" className="btn-primary bg-white text-primary-600 hover:bg-primary-50">
-            Request a Quote
-          </Link>
+          <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.98 }}>
+            <TransitionLink href="/request-a-quote" className="btn-primary bg-white text-primary-600 hover:bg-primary-50">
+              Request a Quote
+            </TransitionLink>
+          </motion.div>
         </div>
-      </section>
+      </Reveal>
     </>
   )
 }
-

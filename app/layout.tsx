@@ -5,6 +5,9 @@ import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import CookieBanner from '@/components/CookieBanner'
 import GoogleAnalytics from '@/components/GoogleAnalytics'
+import { MotionProvider } from './providers'
+import PageTransition from '@/components/PageTransition'
+import SingularityOverlay from '@/components/motion/SingularityOverlay'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -31,10 +34,15 @@ export default function RootLayout({
       </head>
       <body className={inter.className}>
         <GoogleAnalytics />
-        <Header />
-        <main>{children}</main>
-        <Footer />
-        <CookieBanner />
+        <MotionProvider>
+          <Header />
+          <PageTransition>
+            <main>{children}</main>
+          </PageTransition>
+          <Footer />
+          <CookieBanner />
+          <SingularityOverlay />
+        </MotionProvider>
       </body>
     </html>
   )

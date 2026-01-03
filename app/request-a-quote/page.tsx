@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as z from 'zod'
-import Link from 'next/link'
+import TransitionLink from '@/components/TransitionLink'
 
 const quoteSchema = z.object({
   company: z.string().min(2, 'Company name is required'),
@@ -88,9 +88,9 @@ export default function RequestAQuote() {
             <p className="text-lg text-gray-700 mb-6">
               Your quote request has been submitted successfully. We&apos;ll review your requirements and get back to you within 24 hours.
             </p>
-            <Link href="/" className="btn-primary">
+            <TransitionLink href="/" className="btn-primary">
               Return to Home
-            </Link>
+            </TransitionLink>
           </div>
         </div>
       </div>
@@ -348,9 +348,9 @@ export default function RequestAQuote() {
                 />
                 <span className="text-sm text-gray-700">
                   I consent to the processing of my personal data in accordance with the{' '}
-                  <Link href="/privacy-policy" className="text-primary-600 hover:underline">
+                  <TransitionLink href="/privacy-policy" className="text-primary-600 hover:underline">
                     Privacy Policy
-                  </Link>
+                  </TransitionLink>
                   . *
                 </span>
               </label>

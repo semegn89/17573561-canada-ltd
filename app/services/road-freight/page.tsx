@@ -1,10 +1,8 @@
-import Link from 'next/link'
-import type { Metadata } from 'next'
+'use client'
 
-export const metadata: Metadata = {
-  title: 'Road Freight Services | EU Pickup & Transport',
-  description: 'European road freight and pickup services. Integrated with ocean and air freight for complete door-to-door solutions.',
-}
+import TransitionLink from '@/components/TransitionLink'
+import Reveal from '@/components/motion/Reveal'
+import { motion } from 'framer-motion'
 
 export default function RoadFreight() {
   return (
@@ -20,7 +18,7 @@ export default function RoadFreight() {
 
       <section className="section-padding bg-white">
         <div className="container-custom">
-          <div className="grid md:grid-cols-2 gap-12 items-center mb-16">
+          <Reveal className="grid md:grid-cols-2 gap-12 items-center mb-16">
             <div>
               <h2 className="text-3xl font-bold mb-6">What We Handle</h2>
               <ul className="space-y-3">
@@ -47,9 +45,9 @@ export default function RoadFreight() {
                 <span className="text-gray-400">service_road.webp</span>
               </div>
             </div>
-          </div>
+          </Reveal>
 
-          <div className="bg-gray-50 p-8 rounded-lg mb-16">
+          <Reveal className="bg-gray-50 p-8 rounded-lg mb-16">
             <h2 className="text-2xl font-bold mb-4">Best For</h2>
             <p className="text-gray-700 mb-4">
               Road freight is essential for the first and last mile of your shipment:
@@ -61,9 +59,9 @@ export default function RoadFreight() {
               <li>Complete door-to-door solutions within Europe</li>
               <li>Flexible scheduling and multiple pickup points</li>
             </ul>
-          </div>
+          </Reveal>
 
-          <div className="mb-16">
+          <Reveal className="mb-16">
             <h2 className="text-2xl font-bold mb-6">Our Process</h2>
             <div className="grid md:grid-cols-4 gap-6">
               {[
@@ -81,9 +79,9 @@ export default function RoadFreight() {
                 </div>
               ))}
             </div>
-          </div>
+          </Reveal>
 
-          <div className="bg-white border-2 border-gray-200 rounded-lg p-8">
+          <Reveal className="bg-white border-2 border-gray-200 rounded-lg p-8">
             <h2 className="text-2xl font-bold mb-6">Frequently Asked Questions</h2>
             <div className="space-y-6">
               {[
@@ -110,23 +108,23 @@ export default function RoadFreight() {
                 </div>
               ))}
             </div>
-          </div>
+          </Reveal>
         </div>
       </section>
 
-      <section className="section-padding bg-primary-600 text-white">
+      <Reveal className="section-padding bg-primary-600 text-white">
         <div className="container-custom text-center">
           <h2 className="text-3xl md:text-4xl font-bold mb-6">Need EU Pickup?</h2>
           <p className="text-xl mb-8 text-primary-100">
             Get a quote for your road freight and pickup services
           </p>
-          <Link href="/request-a-quote" className="btn-primary bg-white text-primary-600 hover:bg-primary-50">
-            Request a Quote
-          </Link>
+          <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.98 }}>
+            <TransitionLink href="/request-a-quote" className="btn-primary bg-white text-primary-600 hover:bg-primary-50">
+              Request a Quote
+            </TransitionLink>
+          </motion.div>
         </div>
-      </section>
+      </Reveal>
     </>
   )
 }
-
-
