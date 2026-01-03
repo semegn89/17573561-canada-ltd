@@ -2,6 +2,7 @@
 
 import TransitionLink from '@/components/TransitionLink'
 import Reveal, { RevealStagger } from '@/components/motion/Reveal'
+import SmartImage from '@/components/SmartImage'
 import { motion } from 'framer-motion'
 
 export default function Home() {
@@ -31,10 +32,14 @@ export default function Home() {
                 </motion.div>
               </div>
             </div>
-            <div className="relative h-96 rounded-lg overflow-hidden">
-              <div className="absolute inset-0 bg-gray-800 flex items-center justify-center">
-                <span className="text-gray-400">hero_home.webp</span>
-              </div>
+            <div className="relative h-96 rounded-lg overflow-hidden bg-gray-200">
+              <SmartImage
+                src="/images/hero_home.webp"
+                alt="Europe to Canada freight services"
+                fill
+                priority
+                className="object-cover"
+              />
             </div>
           </div>
         </div>
@@ -73,19 +78,19 @@ export default function Home() {
                 title: 'Ocean Freight',
                 desc: 'FCL and LCL container shipping from European ports to Canada. Cost-effective for large volumes.',
                 link: '/services/ocean-freight',
-                image: 'service_ocean.webp',
+                image: '/images/service_ocean.webp',
               },
               {
                 title: 'Air Freight',
                 desc: 'Fast and reliable air cargo services for time-sensitive shipments. Express delivery options available.',
                 link: '/services/air-freight',
-                image: 'service_air.webp',
+                image: '/images/service_air.webp',
               },
               {
                 title: 'Customs Support',
                 desc: 'Expert customs clearance coordination. We work with licensed partners to ensure smooth import processes.',
                 link: '/services/customs-support',
-                image: 'service_customs.webp',
+                image: '/images/service_customs.webp',
               },
             ].map((service) => (
               <motion.div
@@ -97,8 +102,13 @@ export default function Home() {
                   href={service.link}
                   className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow block"
                 >
-                  <div className="h-48 bg-gray-200 flex items-center justify-center">
-                    <span className="text-gray-400 text-sm">{service.image}</span>
+                  <div className="relative h-48 bg-gray-200">
+                    <SmartImage
+                      src={service.image}
+                      alt={service.title}
+                      fill
+                      className="object-cover"
+                    />
                   </div>
                   <div className="p-6">
                     <h3 className="text-xl font-bold mb-2">{service.title}</h3>
@@ -150,10 +160,13 @@ export default function Home() {
                 </TransitionLink>
               </motion.div>
             </div>
-            <div className="relative h-96 rounded-lg overflow-hidden">
-              <div className="absolute inset-0 bg-gray-800 flex items-center justify-center">
-                <span className="text-gray-400">hero_lane.webp</span>
-              </div>
+            <div className="relative h-96 rounded-lg overflow-hidden bg-gray-200">
+              <SmartImage
+                src="/images/hero_lane.webp"
+                alt="Europe to Canada trade lane"
+                fill
+                className="object-cover"
+              />
             </div>
           </div>
         </div>

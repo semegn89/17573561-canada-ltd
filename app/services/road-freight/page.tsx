@@ -2,6 +2,7 @@
 
 import TransitionLink from '@/components/TransitionLink'
 import Reveal from '@/components/motion/Reveal'
+import SmartImage from '@/components/SmartImage'
 import { motion } from 'framer-motion'
 
 export default function RoadFreight() {
@@ -41,9 +42,12 @@ export default function RoadFreight() {
               </ul>
             </div>
             <div className="relative h-96 rounded-lg overflow-hidden bg-gray-200">
-              <div className="absolute inset-0 flex items-center justify-center">
-                <span className="text-gray-400">service_road.webp</span>
-              </div>
+              <SmartImage
+                src="/images/service_road.webp"
+                alt="Road freight services"
+                fill
+                className="object-cover"
+              />
             </div>
           </Reveal>
 

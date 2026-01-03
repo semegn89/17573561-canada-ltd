@@ -2,6 +2,7 @@
 
 import TransitionLink from '@/components/TransitionLink'
 import Reveal from '@/components/motion/Reveal'
+import SmartImage from '@/components/SmartImage'
 import { motion } from 'framer-motion'
 
 export default function About() {
@@ -31,9 +32,12 @@ export default function About() {
               </p>
             </div>
             <div className="relative h-96 rounded-lg overflow-hidden bg-gray-200">
-              <div className="absolute inset-0 flex items-center justify-center">
-                <span className="text-gray-400">about_team.webp</span>
-              </div>
+              <SmartImage
+                src="/images/about_team.webp"
+                alt="About our team"
+                fill
+                className="object-cover"
+              />
             </div>
           </Reveal>
 

@@ -2,6 +2,7 @@
 
 import TransitionLink from '@/components/TransitionLink'
 import Reveal from '@/components/motion/Reveal'
+import SmartImage from '@/components/SmartImage'
 import { motion } from 'framer-motion'
 
 export default function OceanFreight() {
@@ -41,9 +42,12 @@ export default function OceanFreight() {
               </ul>
             </div>
             <div className="relative h-96 rounded-lg overflow-hidden bg-gray-200">
-              <div className="absolute inset-0 flex items-center justify-center">
-                <span className="text-gray-400">service_ocean.webp</span>
-              </div>
+              <SmartImage
+                src="/images/service_ocean.webp"
+                alt="Ocean freight services"
+                fill
+                className="object-cover"
+              />
             </div>
           </Reveal>
 

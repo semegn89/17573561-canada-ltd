@@ -2,6 +2,7 @@
 
 import TransitionLink from '@/components/TransitionLink'
 import Reveal from '@/components/motion/Reveal'
+import SmartImage from '@/components/SmartImage'
 import { motion } from 'framer-motion'
 
 export default function CustomsSupport() {
@@ -42,9 +43,12 @@ export default function CustomsSupport() {
               </ul>
             </div>
             <div className="relative h-96 rounded-lg overflow-hidden bg-gray-200">
-              <div className="absolute inset-0 flex items-center justify-center">
-                <span className="text-gray-400">service_customs.webp</span>
-              </div>
+              <SmartImage
+                src="/images/service_customs.webp"
+                alt="Customs support services"
+                fill
+                className="object-cover"
+              />
             </div>
           </Reveal>
 
